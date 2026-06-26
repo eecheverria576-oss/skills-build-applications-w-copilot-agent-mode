@@ -10,8 +10,6 @@ const getApiBaseUrl = () => {
   return 'http://localhost:8000'
 }
 
-const getApiUrl = (resource) => `${getApiBaseUrl()}/api/${resource}/`
-
 const normalizeCollection = (payload) => {
   if (Array.isArray(payload)) {
     return payload
@@ -39,7 +37,8 @@ function Leaderboard() {
   useEffect(() => {
     const loadLeaderboard = async () => {
       try {
-        const response = await fetch(getApiUrl('leaderboard'))
+        const apiBaseUrl = getApiBaseUrl()
+        const response = await fetch(`${apiBaseUrl}/api/leaderboard/`)
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`)
         }

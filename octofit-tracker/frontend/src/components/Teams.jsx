@@ -10,8 +10,6 @@ const getApiBaseUrl = () => {
   return 'http://localhost:8000'
 }
 
-const getApiUrl = (resource) => `${getApiBaseUrl()}/api/${resource}/`
-
 const normalizeCollection = (payload) => {
   if (Array.isArray(payload)) {
     return payload
@@ -39,7 +37,8 @@ function Teams() {
   useEffect(() => {
     const loadTeams = async () => {
       try {
-        const response = await fetch(getApiUrl('teams'))
+        const apiBaseUrl = getApiBaseUrl()
+        const response = await fetch(`${apiBaseUrl}/api/teams/`)
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`)
         }
