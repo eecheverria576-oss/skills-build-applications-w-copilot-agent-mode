@@ -46,7 +46,7 @@ app.get(['/api/teams', '/api/teams/'], async (_req: Request, res: Response) => {
 app.post(['/api/teams', '/api/teams/'], async (req: Request, res: Response) => {
   const team = await Team.create(req.body);
   res.status(201).json(team);
-});
+}); 
 
 app.get(['/api/activities', '/api/activities/'], async (_req: Request, res: Response) => {
   const activities = await Activity.find({}).lean();
