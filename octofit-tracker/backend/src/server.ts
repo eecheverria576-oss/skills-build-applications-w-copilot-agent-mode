@@ -6,7 +6,7 @@ import { Team } from './models/team';
 import { Activity } from './models/activity';
 import { LeaderboardEntry } from './models/leaderboard';
 import { Workout } from './models/workout';
-import { connectToDatabase } from './database';
+import { connectToDatabase } from './database'; 
 
 dotenv.config();
 
