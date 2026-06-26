@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 const getApiBaseUrl = () => {
   const codespaceName = import.meta.env.VITE_CODESPACE_NAME?.trim()
+
   if (codespaceName) {
     return `https://${codespaceName}-8000.app.github.dev`
   }
@@ -16,8 +17,16 @@ const normalizeCollection = (payload) => {
     return payload
   }
 
-  if (payload && Array.isArray(payload.data)) {
+  if (Array.isArray(payload?.data)) {
     return payload.data
+  }
+
+  if (Array.isArray(payload?.results)) {
+    return payload.results
+  }
+
+  if (Array.isArray(payload?.items)) {
+    return payload.items
   }
 
   return []
