@@ -6,16 +6,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
-const mongoose_1 = __importDefault(require("mongoose"));
 const user_1 = require("./models/user");
 const team_1 = require("./models/team");
 const activity_1 = require("./models/activity");
 const leaderboard_1 = require("./models/leaderboard");
 const workout_1 = require("./models/workout");
+const database_1 = require("./database");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = Number(process.env.PORT || 8000);
-const mongoUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/octofit_db';
 const codespaceName = process.env.CODESPACE_NAME;
 const apiBaseUrl = codespaceName
     ? `https://${codespaceName}-8000.app.github.dev`
@@ -71,8 +70,7 @@ app.post(['/api/workouts', '/api/workouts/'], async (req, res) => {
 app.get('/', (_req, res) => {
     res.send('OctoFit Tracker API is running');
 });
-mongoose_1.default
-    .connect(mongoUri)
+(0, database_1.connectToDatabase)()
     .then(() => {
     console.log('MongoDB connected');
     app.listen(port, '0.0.0.0', () => {

@@ -1,18 +1,17 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import mongoose from 'mongoose';
 import { User } from './models/user';
 import { Team } from './models/team';
 import { Activity } from './models/activity';
 import { LeaderboardEntry } from './models/leaderboard';
 import { Workout } from './models/workout';
+import { connectToDatabase } from './database';
 
 dotenv.config();
 
 const app = express();
 const port = Number(process.env.PORT || 8000);
-const mongoUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/octofit_db';
 const codespaceName = process.env.CODESPACE_NAME;
 const apiBaseUrl = codespaceName
   ? `https://${codespaceName}-8000.app.github.dev`
@@ -83,8 +82,7 @@ app.get('/', (_req: Request, res: Response) => {
   res.send('OctoFit Tracker API is running');
 });
 
-mongoose
-  .connect(mongoUri)
+connectToDatabase()
   .then(() => {
     console.log('MongoDB connected');
     app.listen(port, '0.0.0.0', () => {
